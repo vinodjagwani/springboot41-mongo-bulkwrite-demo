@@ -1,0 +1,21 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+  # NOTE: as of Spring Boot 4.0, the mongo config prefix moved from
+  # spring.data.mongodb.* to spring.mongodb.* (error-level deprecation,
+  # confirmed via spring-boot-mongodb-4.1.0.jar's spring-configuration-metadata.json).
+  # The old prefix binds to nothing and fails silently -> driver falls back
+  # to mongodb://localhost/test with no warning at all.
+  mongodb:
+    uri: mongodb://localhost:27017/bulkwrite_demo
+    # Multi-collection bulkWrite (MongoOperations.bulkWrite with Bulk.create(...)
+    # spanning >1 collection) requires a MongoDB 8.0+ server/replica-set.
+    # Single-collection bulkWrite via the same new API works on older servers too.
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.mongodb.core: DEBUG
